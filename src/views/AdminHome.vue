@@ -1,11 +1,11 @@
 <template>
   <el-container style="height: 600px; border: 1px solid #eee">
     <el-aside width="200px" style="background-color: rgb(238, 241, 246)">
-      <el-menu :default-openeds="['1']">
+      <el-menu :default-openeds="['1']" @select="menuClick">
         <el-submenu index="1">
-          <template slot="title"><i class="el-icon-message"></i>导航一</template>
-            <el-menu-item index="1-1">选项1</el-menu-item>
-            <el-menu-item index="1-2">选项2</el-menu-item>
+          <template slot="title"><i class="el-icon-message"></i>用户管理</template>
+            <el-menu-item index="/test1">用户添加</el-menu-item>
+            <el-menu-item index="1-2">用户查看</el-menu-item>
             <el-menu-item index="1-3">选项3</el-menu-item>
         </el-submenu>
         <el-submenu index="2">
@@ -36,14 +36,7 @@
       </el-header>
 
       <el-main>
-        <el-table :data="tableData">
-          <el-table-column prop="date" label="日期" width="140">
-          </el-table-column>
-          <el-table-column prop="name" label="姓名" width="120">
-          </el-table-column>
-          <el-table-column prop="address" label="地址">
-          </el-table-column>
-        </el-table>
+        <router-view/>
       </el-main>
     </el-container>
   </el-container>
@@ -68,8 +61,8 @@ export default {
   beforeRouteEnter: (to, from, next) => {
     // {"uid":1,"uname":"admin","hid":1,"upassword":"123","uadmin":"1"}
     const session = JSON.parse(sessionStorage.getItem('user'))
-    if (session.uadmin === '1') {
-      next({ path: '/adminhome' })
+    if (session.uadmin === '0') {
+      next({ path: '/home' })
     }
     next(vm => {
       vm.user.id = session.uid
@@ -82,6 +75,9 @@ export default {
     logOut () {
       Message.success('已注销！')
       this.$router.replace('/logout')
+    },
+    menuClick (index) {
+      this.$router.push(index)
     }
   }
 }

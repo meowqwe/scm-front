@@ -40,8 +40,12 @@ export default {
             if (resp) {
               this.loading = false
               const user = resp.data
-              sessionStorage.setItem('user', JSON.toString(user))
-              this.$router.replace('/home')
+              sessionStorage.setItem('user', JSON.stringify(user))
+              if (user.uadmin === '1') {
+                this.$router.replace('/adminhome')
+              } else {
+                this.$router.replace('/home')
+              }
             }
           })
         } else {
