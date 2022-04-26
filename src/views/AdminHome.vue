@@ -4,21 +4,25 @@
       <el-menu :default-openeds="['1']" @select="menuClick">
         <el-submenu index="1">
           <template slot="title"><i class="el-icon-message"></i>用户管理</template>
-            <el-menu-item index="/test1">用户添加</el-menu-item>
-            <el-menu-item index="1-2">用户查看</el-menu-item>
-            <el-menu-item index="1-3">选项3</el-menu-item>
+          <el-menu-item index="1-1">用户信息</el-menu-item>
         </el-submenu>
         <el-submenu index="2">
-          <template slot="title"><i class="el-icon-menu"></i>导航二</template>
-          <el-menu-item index="1-1">选项1</el-menu-item>
-          <el-menu-item index="1-2">选项2</el-menu-item>
-          <el-menu-item index="1-3">选项3</el-menu-item>
+          <template slot="title"><i class="el-icon-menu"></i>闲置交易</template>
+          <el-menu-item index="1-1">信息审核</el-menu-item>
         </el-submenu>
         <el-submenu index="3">
-          <template slot="title"><i class="el-icon-setting"></i>导航三</template>
-          <el-menu-item index="1-1">选项1</el-menu-item>
-          <el-menu-item index="1-2">选项2</el-menu-item>
-          <el-menu-item index="1-3">选项3</el-menu-item>
+          <template slot="title"><i class="el-icon-setting"></i>租房信息</template>
+          <el-menu-item index="1-1">信息审核</el-menu-item>
+        </el-submenu>
+        <el-submenu index="4">
+          <template slot="title"><i class="el-icon-setting"></i>社区常见问题</template>
+          <el-menu-item index="/adminProblem">信息管理</el-menu-item>
+        </el-submenu>
+        <el-submenu index="5">
+          <template slot="title"><i class="el-icon-setting"></i>社区服务</template>
+          <el-menu-item index="1-1">服务管理</el-menu-item>
+          <el-menu-item index="1-1">人员管理</el-menu-item>
+          <el-menu-item index="1-1">关联管理</el-menu-item>
         </el-submenu>
       </el-menu>
     </el-aside>
@@ -30,11 +34,11 @@
           <el-dropdown-menu slot="dropdown">
             <el-dropdown-item>个人信息</el-dropdown-item>
             <el-dropdown-item @click.native="logOut">注销</el-dropdown-item>
+            <el-dropdown-item >密码修改</el-dropdown-item>
           </el-dropdown-menu>
         </el-dropdown>
         <span>{{user.name}}</span>
       </el-header>
-
       <el-main>
         <router-view/>
       </el-main>
@@ -69,6 +73,7 @@ export default {
       vm.user.name = session.uname
       vm.user.hid = session.hid
       vm.user.admin = session.uadmin
+      vm.$router.push('/mainPage')
     })
   },
   methods: {

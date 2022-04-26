@@ -12,13 +12,13 @@ axios.interceptors.request.use(config => {
 axios.interceptors.response.use(success => {
   // 业务逻辑错误
   if (success.status && success.status === 200) {
-    if (success.data.flag) {
+    if (success.data.flag && success.data.message != null) {
       Message.success({ message: success.data.message })
     } else if (success.data.message) {
       Message.error({ message: success.data.message })
     }
   }
-  return success.data
+  return success
 }, error => {
   if (error.response.code === 504 || error.response.code === 404) {
     Message.error({ message: '服务器请求失败' })

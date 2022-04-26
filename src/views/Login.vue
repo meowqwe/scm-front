@@ -10,7 +10,6 @@
         </el-form-item>
         <el-form-item>
           <el-button type="primary" class="button" @click="submitLogin">登录</el-button>
-          <el-button type="primary" class="button">注册</el-button>
         </el-form-item>
       </el-form>
     </div>
@@ -39,7 +38,7 @@ export default {
           this.postRequest('/scmuser/login', this.loginForm).then(resp => {
             if (resp) {
               this.loading = false
-              const user = resp.data
+              const user = resp.data.data
               sessionStorage.setItem('user', JSON.stringify(user))
               if (user.uadmin === '1') {
                 this.$router.replace('/adminhome')
@@ -70,8 +69,7 @@ export default {
     box-shadow: 0 0 25px #cac6c6;
   }
   .button{
-    width: 45%;
-    margin-left: 10px;
+    width: 100%;
   }
   .loginTitle{
     margin: 10px auto 20px auto;
