@@ -34,7 +34,7 @@
           <el-dropdown-menu slot="dropdown">
             <el-dropdown-item>个人信息</el-dropdown-item>
             <el-dropdown-item @click.native="logOut">注销</el-dropdown-item>
-            <el-dropdown-item >密码修改</el-dropdown-item>
+            <el-dropdown-item @click.native="updatePassword">密码修改</el-dropdown-item>
           </el-dropdown-menu>
         </el-dropdown>
         <span>{{user.name}}</span>
@@ -83,6 +83,9 @@ export default {
     },
     menuClick (index) {
       this.$router.push(index)
+    },
+    updatePassword () {
+      this.$router.replace('/passwordUpdate')
     }
   }
 }

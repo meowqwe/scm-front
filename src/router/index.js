@@ -21,6 +21,11 @@ const routes = [
         path: '/adminProblem',
         name: 'AdminProblem',
         component: () => import('@/views/AdminProblem')
+      },
+      {
+        path: '/passwordUpdate',
+        name: 'PasswordUpdate',
+        component: () => import('@/views/PasswordUpdate')
       }
     ]
   },
