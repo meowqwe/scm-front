@@ -82,8 +82,8 @@ export default {
   },
   methods: {
     handleClick (row) {
+      this.deleteMap = row
       this.confirmVisible = true
-      this.row = row
     },
     convert () {
       this.postRequest('/problem/findAll', this.searchMap).then(resp => {
@@ -114,13 +114,15 @@ export default {
       this.postRequest('/problem/addProblem', this.problemForm).then(resp => {
         if (resp) {
           this.dialogVisible = false
+          this.convert()
         }
       })
     },
     confirm () {
-      this.postRequest('/problem/deleteProblem', this.tableData[this.row]).then(resp => {
+      this.postRequest('/problem/deleteProblem', this.deleteMap).then(resp => {
         if (resp) {
           this.confirmVisible = false
+          this.convert()
         }
       })
     }
@@ -128,7 +130,6 @@ export default {
 
   data () {
     return {
-      row: null,
       confirmVisible: false,
       dialogVisible: false,
       input: '',
@@ -138,6 +139,7 @@ export default {
         pageSize: '5',
         pageNum: '1'
       },
+      deleteMap: {},
       problemForm: {
         name: '',
         solution: ''

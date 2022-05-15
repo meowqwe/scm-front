@@ -26,6 +26,16 @@ const routes = [
         path: '/passwordUpdate',
         name: 'PasswordUpdate',
         component: () => import('@/views/PasswordUpdate')
+      },
+      {
+        path: '/userManager',
+        name: 'UserManager',
+        component: () => import('@/views/UserManager')
+      },
+      {
+        path: '/tradeCheck',
+        name: 'TradeCheck',
+        component: () => import('@/views/TradeCheck')
       }
     ]
   },
@@ -35,9 +45,24 @@ const routes = [
     component: () => import('@/views/Home'),
     children: [
       {
-        path: '/mainPage',
+        path: '/mainPage1',
         name: 'MainPage',
         component: () => import('@/views/MainPage')
+      },
+      {
+        path: '/trade',
+        name: 'Trade',
+        component: () => import('@/views/Trade')
+      },
+      {
+        path: '/userService',
+        name: 'UserService',
+        component: () => import('@/views/UserService')
+      },
+      {
+        path: '/rent',
+        name: 'Rent',
+        component: () => import('@/views/Rent')
       }
     ]
   },

@@ -1,24 +1,26 @@
 <template>
   <el-container style="height: 600px; border: 1px solid #eee">
     <el-aside width="200px" style="background-color: rgb(238, 241, 246)">
-      <el-menu :default-openeds="['1']">
+      <el-menu :default-openeds="['1']" @select="menuClick">
         <el-submenu index="1">
-          <template slot="title"><i class="el-icon-message"></i>导航一</template>
-            <el-menu-item index="1-1">选项1</el-menu-item>
-            <el-menu-item index="1-2">选项2</el-menu-item>
-            <el-menu-item index="1-3">选项3</el-menu-item>
+          <template slot="title"><i class="el-icon-message"></i>个人中心</template>
+            <el-menu-item index="1-1">我的主页</el-menu-item>
         </el-submenu>
         <el-submenu index="2">
-          <template slot="title"><i class="el-icon-menu"></i>导航二</template>
-          <el-menu-item index="1-1">选项1</el-menu-item>
-          <el-menu-item index="1-2">选项2</el-menu-item>
-          <el-menu-item index="1-3">选项3</el-menu-item>
+          <template slot="title"><i class="el-icon-menu"></i>闲置交易</template>
+          <el-menu-item index="/trade">闲置浏览</el-menu-item>
+          <el-menu-item index="1-1">闲置发布</el-menu-item>
         </el-submenu>
         <el-submenu index="3">
-          <template slot="title"><i class="el-icon-setting"></i>导航三</template>
-          <el-menu-item index="1-1">选项1</el-menu-item>
-          <el-menu-item index="1-2">选项2</el-menu-item>
-          <el-menu-item index="1-3">选项3</el-menu-item>
+          <template slot="title"><i class="el-icon-setting"></i>租房信息</template>
+          <el-menu-item index="/rent">信息浏览</el-menu-item>
+          <el-menu-item index="1-2">信息发布</el-menu-item>
+        </el-submenu>
+        <el-submenu index="4">
+          <template slot="title"><i class="el-icon-setting"></i>信息共享</template>
+          <el-menu-item index="1-1">常见问题</el-menu-item>
+          <el-menu-item index="/userService">社区服务</el-menu-item>
+          <el-menu-item index="1-2">商铺浏览</el-menu-item>
         </el-submenu>
       </el-menu>
     </el-aside>
@@ -30,20 +32,13 @@
           <el-dropdown-menu slot="dropdown">
             <el-dropdown-item>个人信息</el-dropdown-item>
             <el-dropdown-item @click.native="logOut">注销</el-dropdown-item>
+            <el-dropdown-item @click.native="updatePassword">密码修改</el-dropdown-item>
           </el-dropdown-menu>
         </el-dropdown>
         <span>{{user.name}}</span>
       </el-header>
-
       <el-main>
-        <el-table :data="tableData">
-          <el-table-column prop="date" label="日期" width="140">
-          </el-table-column>
-          <el-table-column prop="name" label="姓名" width="120">
-          </el-table-column>
-          <el-table-column prop="address" label="地址">
-          </el-table-column>
-        </el-table>
+        <router-view/>
       </el-main>
     </el-container>
   </el-container>
@@ -76,12 +71,19 @@ export default {
       vm.user.name = session.uname
       vm.user.hid = session.hid
       vm.user.admin = session.uadmin
+      vm.$router.push('/mainPage1')
     })
   },
   methods: {
     logOut () {
       Message.success('已注销！')
       this.$router.replace('/logout')
+    },
+    menuClick (index) {
+      this.$router.push(index)
+    },
+    updatePassword () {
+      this.$router.replace('/passwordUpdate')
     }
   }
 }
