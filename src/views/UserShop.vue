@@ -8,6 +8,16 @@
           v-model="searchMap.name">
         </el-input>
       </div>
+      <div class="input">
+        <el-select v-model="searchMap.class" placeholder="请选择">
+          <el-option
+            v-for="item in options"
+            :key="item.value"
+            :label="item.label"
+            :value="item.value">
+          </el-option>
+        </el-select>
+      </div>
       <div class="search">
         <el-button type="primary" icon="el-icon-search" @click="select">搜索</el-button>
       </div>
@@ -18,16 +28,18 @@
         border
         style="width: 100%">
         <el-table-column
-          prop="sname"
-          label="名称">
+          prop="shName"
+          label="名称"
+          width="250">
         </el-table-column>
         <el-table-column
-          fixed="right"
-          label="操作"
-          width="150">
-          <template slot-scope="scope">
-            <el-button @click="handleClick(scope.row)" type="text" size="small">查看</el-button>
-          </template>
+          prop="shClass"
+          label="类型"
+          width="250">
+        </el-table-column>
+        <el-table-column
+          prop="shDescription"
+          label="描述">
         </el-table-column>
       </el-table>
     </div>
@@ -41,37 +53,21 @@
         :total="total">
       </el-pagination>
     </div>
-    <div class="form">
-      <el-dialog title="工人信息" :visible.sync="desVisible" width="50%">
-        <el-descriptions>
-          <el-descriptions-item label="姓名">{{row.wname}}</el-descriptions-item>
-          <el-descriptions-item label="性别">{{row.wgender}}</el-descriptions-item>
-          <el-descriptions-item label="联系方式">{{row.wcontact}}</el-descriptions-item>
-        </el-descriptions>
-      </el-dialog>
-    </div>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'UserService',
+  name: 'UserShop',
   created () {
     this.convert()
   },
   methods: {
-    handleClick (row) {
-      this.desVisible = true
-    },
-    updateClick (row) {
-      this.updateMap = row
-      this.updateVisible = true
-    },
     convert () {
-      this.postRequest('/Service/findAll', this.searchMap).then(resp => {
+      this.postRequest('/shop/findAll', this.searchMap).then(resp => {
         if (resp) {
-          const users = resp.data.data
-          this.tableData = users
+          const shops = resp.data.data
+          this.tableData = shops
           this.total = resp.data.total
         }
       })
@@ -81,22 +77,11 @@ export default {
       this.convert()
     },
     select () {
-      this.postRequest('/Service/search', this.searchMap).then(resp => {
+      this.postRequest('/shop/search', this.searchMap).then(resp => {
         if (resp) {
-          const users = resp.data.data
-          this.tableData = users
+          const shops = resp.data.data
+          this.tableData = shops
           this.total = resp.data.total
-        }
-      })
-    },
-    visit () {
-      this.dialogVisible = true
-    },
-    confirm () {
-      this.postRequest('/problem/deleteProblem', this.deleteMap).then(resp => {
-        if (resp) {
-          this.confirmVisible = false
-          this.convert()
         }
       })
     }
@@ -104,28 +89,35 @@ export default {
 
   data () {
     return {
-      desVisible: false,
       input: '',
       tableData: [],
-      workerData: [],
-      row: {
-        wname: '张三',
-        wgender: '男',
-        wcontact: '123-4567-7654'
-      },
       searchMap: {
         name: '',
+        class: '',
         pageSize: '5',
         pageNum: '1'
       },
-      deleteMap: {},
-      updateMap: {},
-      problemForm: {
-        name: '',
-        solution: ''
-      },
       total: null,
-      pageNum: null
+      pageNum: null,
+      options: [{
+        value: '',
+        label: '请选择'
+      }, {
+        value: '超市',
+        label: '超市'
+      }, {
+        value: '餐饮',
+        label: '餐饮'
+      }, {
+        value: '娱乐',
+        label: '娱乐'
+      }, {
+        value: '生活',
+        label: '生活'
+      }, {
+        value: '其他',
+        label: '其他'
+      }]
     }
   }
 }
@@ -139,11 +131,12 @@ export default {
     display: flex;
   }
   .input {
+    margin-left: 10px;
     width: 50%;
   }
   .search {
     width: 40%;
-    margin-left: 20px;
+    margin-left: 10px;
   }
   .add {
     float: right;

@@ -9,18 +9,18 @@
         <el-submenu index="2">
           <template slot="title"><i class="el-icon-menu"></i>闲置交易</template>
           <el-menu-item index="/trade">闲置浏览</el-menu-item>
-          <el-menu-item index="1-1">闲置发布</el-menu-item>
+          <el-menu-item index="/addTrade">闲置发布</el-menu-item>
         </el-submenu>
         <el-submenu index="3">
           <template slot="title"><i class="el-icon-setting"></i>租房信息</template>
           <el-menu-item index="/rent">信息浏览</el-menu-item>
-          <el-menu-item index="1-2">信息发布</el-menu-item>
+          <el-menu-item index="/addRent">信息发布</el-menu-item>
         </el-submenu>
         <el-submenu index="4">
           <template slot="title"><i class="el-icon-setting"></i>信息共享</template>
-          <el-menu-item index="1-1">常见问题</el-menu-item>
+          <el-menu-item index="/userProblem">常见问题</el-menu-item>
           <el-menu-item index="/userService">社区服务</el-menu-item>
-          <el-menu-item index="1-2">商铺浏览</el-menu-item>
+          <el-menu-item index="/userShop">商铺浏览</el-menu-item>
         </el-submenu>
       </el-menu>
     </el-aside>

@@ -55,6 +55,11 @@ const routes = [
         component: () => import('@/views/Trade')
       },
       {
+        path: '/addTrade',
+        name: 'AddTrade',
+        component: () => import('@/views/AddTrade')
+      },
+      {
         path: '/userService',
         name: 'UserService',
         component: () => import('@/views/UserService')
@@ -63,6 +68,21 @@ const routes = [
         path: '/rent',
         name: 'Rent',
         component: () => import('@/views/Rent')
+      },
+      {
+        path: '/addRent',
+        name: 'AddRent',
+        component: () => import('@/views/AddRent')
+      },
+      {
+        path: '/userProblem',
+        name: 'UserProblem',
+        component: () => import('@/views/UserProblem')
+      },
+      {
+        path: '/userShop',
+        name: 'UserShop',
+        component: () => import('@/views/UserShop')
       }
     ]
   },
