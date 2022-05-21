@@ -11,9 +11,6 @@
       <div class="search">
         <el-button type="primary" icon="el-icon-search" @click="select">搜索</el-button>
       </div>
-      <div class="add">
-        <el-button type="primary" icon="el-icon-edit" @click="visit">新增</el-button>
-      </div>
     </div>
     <div>
       <el-table
@@ -21,20 +18,25 @@
         border
         style="width: 100%">
         <el-table-column
-          prop="uname"
-          label="名称"
-          width="500">
+          prop="rtime"
+          label="租房时间"
+          width="200">
         </el-table-column>
         <el-table-column
-          prop="uadmin"
-          label="权限">
+          prop="rprice"
+          label="租房价格"
+          width="200">
+        </el-table-column>
+        <el-table-column
+          prop="rdescription"
+          label="房屋描述">
         </el-table-column>
         <el-table-column
           fixed="right"
           label="操作"
           width="150">
           <template slot-scope="scope">
-            <el-button @click="updateClick(scope.row)" type="text" size="small">修改</el-button>
+            <el-button @click="updateClick(scope.row)" type="text" size="small">审核</el-button>
             <el-button @click="handleClick(scope.row)" type="text" size="small">删除</el-button>
           </template>
         </el-table-column>
@@ -51,19 +53,6 @@
       </el-pagination>
     </div>
     <div class="form">
-      <el-dialog title="添加用户" :visible.sync="dialogVisible" width="30%">
-        <el-form :rules="rules" ref="loginForm" :model="problemForm" class="formContainer">
-          <el-form-item prop="name">
-            <el-input type="text" auto-complete="false" v-model="problemForm.name" placeholder="用户名"></el-input>
-          </el-form-item>
-          <div >
-            <el-button @click="dialogVisible = false" class="cancel">取 消</el-button>
-            <el-button type="primary" @click="submit" class="submit">确 定</el-button>
-          </div>
-        </el-form>
-      </el-dialog>
-    </div>
-    <div class="form">
       <el-dialog title="确定要删除吗？" :visible.sync="confirmVisible" width="30%">
         <el-button @click="confirmVisible = false" class="cancel">取 消</el-button>
         <el-button type="primary" @click="confirm" class="submit">确 定</el-button>
@@ -74,7 +63,7 @@
 
 <script>
 export default {
-  name: 'UserManager',
+  name: 'RentCheck',
   created () {
     this.convert()
   },
@@ -85,13 +74,16 @@ export default {
     },
     updateClick (row) {
       this.updateMap = row
-      this.updateVisible = true
+      this.postRequest('/rent/check', this.updateMap).then(resp => {
+        if (resp) {
+        }
+      })
     },
     convert () {
-      this.postRequest('/scmuser/findAll', this.searchMap).then(resp => {
+      this.postRequest('/rent/findAll', this.searchMap).then(resp => {
         if (resp) {
-          const users = resp.data.data
-          this.tableData = users
+          const rents = resp.data.data
+          this.tableData = rents
           this.total = resp.data.total
         }
       })
@@ -101,27 +93,16 @@ export default {
       this.convert()
     },
     select () {
-      this.postRequest('/scmuser/searchByName', this.searchMap).then(resp => {
+      this.postRequest('/rent/search', this.searchMap).then(resp => {
         if (resp) {
-          const users = resp.data.data
-          this.tableData = users
+          const rents = resp.data.data
+          this.tableData = rents
           this.total = resp.data.total
         }
       })
     },
-    visit () {
-      this.dialogVisible = true
-    },
-    submit () {
-      this.postRequest('/problem/addProblem', this.problemForm).then(resp => {
-        if (resp) {
-          this.dialogVisible = false
-          this.convert()
-        }
-      })
-    },
     confirm () {
-      this.postRequest('/problem/deleteProblem', this.deleteMap).then(resp => {
+      this.postRequest('/rent/delete', this.deleteMap).then(resp => {
         if (resp) {
           this.confirmVisible = false
           this.convert()
@@ -133,8 +114,6 @@ export default {
   data () {
     return {
       confirmVisible: false,
-      updateVisible: false,
-      dialogVisible: false,
       input: '',
       tableData: [],
       searchMap: {
@@ -144,10 +123,6 @@ export default {
       },
       deleteMap: {},
       updateMap: {},
-      problemForm: {
-        name: '',
-        solution: ''
-      },
       total: null,
       pageNum: null
     }

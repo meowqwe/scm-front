@@ -12,18 +12,18 @@
         </el-submenu>
         <el-submenu index="3">
           <template slot="title"><i class="el-icon-setting"></i>租房信息</template>
-          <el-menu-item index="1-1">信息审核</el-menu-item>
+          <el-menu-item index="/rentCheck">信息审核</el-menu-item>
         </el-submenu>
         <el-submenu index="4">
           <template slot="title"><i class="el-icon-setting"></i>社区常见问题</template>
           <el-menu-item index="/adminProblem">信息管理</el-menu-item>
         </el-submenu>
-        <el-submenu index="5">
-          <template slot="title"><i class="el-icon-setting"></i>社区服务</template>
-          <el-menu-item index="1-1">服务管理</el-menu-item>
-          <el-menu-item index="1-1">人员管理</el-menu-item>
-          <el-menu-item index="1-1">关联管理</el-menu-item>
-        </el-submenu>
+<!--        <el-submenu index="5">-->
+<!--          <template slot="title"><i class="el-icon-setting"></i>社区服务</template>-->
+<!--          <el-menu-item index="1-1">服务管理</el-menu-item>-->
+<!--          <el-menu-item index="1-1">人员管理</el-menu-item>-->
+<!--          <el-menu-item index="1-1">关联管理</el-menu-item>-->
+<!--        </el-submenu>-->
       </el-menu>
     </el-aside>
 

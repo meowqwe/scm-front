@@ -11,9 +11,6 @@
       <div class="search">
         <el-button type="primary" icon="el-icon-search" @click="select">搜索</el-button>
       </div>
-      <div class="add">
-        <el-button type="primary" icon="el-icon-edit" @click="visit">新增</el-button>
-      </div>
     </div>
     <div>
       <el-table
@@ -21,20 +18,30 @@
         border
         style="width: 100%">
         <el-table-column
-          prop="uname"
-          label="名称"
-          width="500">
+          prop="tname"
+          label="商品名"
+          width="200">
         </el-table-column>
         <el-table-column
-          prop="uadmin"
-          label="权限">
+          prop="tquantity"
+          label="商品数量"
+          width="200">
+        </el-table-column>
+        <el-table-column
+          prop="tprice"
+          label="商品价格"
+          width="200">
+        </el-table-column>
+        <el-table-column
+          prop="tcontact"
+          label="商品描述">
         </el-table-column>
         <el-table-column
           fixed="right"
           label="操作"
           width="150">
           <template slot-scope="scope">
-            <el-button @click="updateClick(scope.row)" type="text" size="small">修改</el-button>
+            <el-button @click="updateClick(scope.row)" type="text" size="small">审核</el-button>
             <el-button @click="handleClick(scope.row)" type="text" size="small">删除</el-button>
           </template>
         </el-table-column>
@@ -49,22 +56,6 @@
         :current-page.sync="pageNum"
         :total="total">
       </el-pagination>
-    </div>
-    <div class="form">
-      <el-dialog title="添加问题" :visible.sync="dialogVisible" width="30%">
-        <el-form :rules="rules" ref="loginForm" :model="problemForm" class="formContainer">
-          <el-form-item prop="name">
-            <el-input type="text" auto-complete="false" v-model="problemForm.name" placeholder="问题名"></el-input>
-          </el-form-item>
-          <el-form-item prop="solution">
-            <el-input type="textarea" v-model="problemForm.solution" placeholder="解决方案"></el-input>
-          </el-form-item>
-          <div >
-            <el-button @click="dialogVisible = false" class="cancel">取 消</el-button>
-            <el-button type="primary" @click="submit" class="submit">确 定</el-button>
-          </div>
-        </el-form>
-      </el-dialog>
     </div>
     <div class="form">
       <el-dialog title="确定要删除吗？" :visible.sync="confirmVisible" width="30%">
@@ -88,13 +79,16 @@ export default {
     },
     updateClick (row) {
       this.updateMap = row
-      this.updateVisible = true
+      this.postRequest('/trade/check', this.updateMap).then(resp => {
+        if (resp) {
+        }
+      })
     },
     convert () {
-      this.postRequest('/scmuser/findAll', this.searchMap).then(resp => {
+      this.postRequest('/trade/findAll', this.searchMap).then(resp => {
         if (resp) {
-          const users = resp.data.data
-          this.tableData = users
+          const trades = resp.data.data
+          this.tableData = trades
           this.total = resp.data.total
         }
       })
@@ -104,27 +98,16 @@ export default {
       this.convert()
     },
     select () {
-      this.postRequest('/scmuser/searchByName', this.searchMap).then(resp => {
+      this.postRequest('/trade/search', this.searchMap).then(resp => {
         if (resp) {
-          const users = resp.data.data
-          this.tableData = users
+          const trades = resp.data.data
+          this.tableData = trades
           this.total = resp.data.total
         }
       })
     },
-    visit () {
-      this.dialogVisible = true
-    },
-    submit () {
-      this.postRequest('/problem/addProblem', this.problemForm).then(resp => {
-        if (resp) {
-          this.dialogVisible = false
-          this.convert()
-        }
-      })
-    },
     confirm () {
-      this.postRequest('/problem/deleteProblem', this.deleteMap).then(resp => {
+      this.postRequest('/trade/delete', this.deleteMap).then(resp => {
         if (resp) {
           this.confirmVisible = false
           this.convert()
@@ -136,8 +119,6 @@ export default {
   data () {
     return {
       confirmVisible: false,
-      updateVisible: false,
-      dialogVisible: false,
       input: '',
       tableData: [],
       searchMap: {
@@ -147,10 +128,6 @@ export default {
       },
       deleteMap: {},
       updateMap: {},
-      problemForm: {
-        name: '',
-        solution: ''
-      },
       total: null,
       pageNum: null
     }

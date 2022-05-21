@@ -36,6 +36,11 @@ const routes = [
         path: '/tradeCheck',
         name: 'TradeCheck',
         component: () => import('@/views/TradeCheck')
+      },
+      {
+        path: '/rentCheck',
+        name: 'RentCheck',
+        component: () => import('@/views/RentCheck')
       }
     ]
   },
@@ -48,6 +53,11 @@ const routes = [
         path: '/mainPage1',
         name: 'MainPage',
         component: () => import('@/views/MainPage')
+      },
+      {
+        path: '/personalCenter',
+        name: 'PersonalCenter',
+        component: () => import('@/views/PersonalCenter')
       },
       {
         path: '/trade',
